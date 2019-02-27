@@ -1,9 +1,17 @@
 import React from 'react';
 // 创建导航器
-import {createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation'
+import {
+    createStackNavigator,
+    createMaterialTopTabNavigator ,
+    createDrawerNavigator ,
+    createSwitchNavigator ,
+    SafeAreaView ,
+    DrawerItems
+} from 'react-navigation'
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { Button ,Platform } from 'react-native'
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
+import { Button ,Platform ,ScrollView } from 'react-native'
 
 //引入页面
 import HomePage from '../pages/HomePage'
@@ -11,7 +19,87 @@ import Page1 from '../pages/page1'
 import Page2 from '../pages/page2'
 import Page3 from '../pages/page3'
 import Page4 from '../pages/page4'
+import Page5 from '../pages/page5'
 import Login from '../pages/Login'
+
+/*
+*   进行下面的配置后，
+*   页面默认进来就是login页面,,并且只会显示一个页面，跳转到其他页面后，
+*   不会在其他页面通过滑动、返回按钮等操作返回到当前页面
+* */
+const AppStack = createStackNavigator({ Home: HomePage,Page1:Page1});
+const AuthStack = createStackNavigator({ Login: { screen : Login } });
+export default createSwitchNavigator(
+    {
+        App: AppStack,
+        Auth: AuthStack,
+    },
+    {
+        initialRouteName: 'Auth',
+    }
+);
+
+
+
+// 抽屉式
+const DrawerNavigator = createDrawerNavigator({
+    Page5:{
+        screen:Page5,
+        navigationOptions:{
+            drawerLabel:'page5页面', // 侧滑菜单的菜单标题
+            drawerIcon:({tintColor}) => {
+                return <MaterialIcon
+                    name={'dashboard'}
+                    size={ 24 }
+                    style={{color:tintColor}}
+                />
+            }
+        }
+    },
+    Page2:{
+        screen:Page2,
+        navigationOptions:{
+            drawerLabel:'page2页面', // 侧滑菜单的菜单标题
+            drawerIcon:({tintColor}) => {
+                return <MaterialIcon
+                    name={'dns'}
+                    size={ 24 }
+                    style={{color:tintColor}}
+                />
+            }
+        }
+    }
+},{
+    order:['Page2','Page5'], // - 定义了侧滑栏items顺序的路由名称数组.
+    initialRouteName:'Page2',//初始路由
+    contentOptions:{ // 侧边菜单内容的颜色
+        activeTintColor: '#e91e63', // 活动选项卡的标签和图标颜色
+        itemsContainerStyle: { //内容节的样式对象
+            marginVertical: 0,
+        },
+        iconContainerStyle: { // 用于覆盖View图标容器样式的样式对象
+            opacity: 1
+        }
+    },
+    /*
+    *  如果自定义内容，请务必将内容包装在 SafeAreaView 中
+    * */
+    contentComponent:(props) => ( // 显示侧边菜单的内容 ,内容就是上面所配置的Page5和Page2两个页面，props接收到的就是这两个页面
+        <ScrollView>
+            <SafeAreaView forceInset={{ flex: 1, top: 'always', horizontal: 'never' }}>
+                <DrawerItems {...props} />
+            </SafeAreaView>
+        </ScrollView>
+    ),
+    /*
+       drawerLockMode的值：
+       unlocked'   可以通过手势和代码 打开关闭抽屉
+       locked-closed' 抽屉关闭状态  不能通过手势打开  只能通过代码实现
+       locked-open'  抽屉打开状态  不能通过手势关闭  只能通过代码实现
+    * */
+    drawerLockMode:'unlocked',//设置是否响应手势
+});
+
 
 // 顶部导航，接收两个参数，第一个为导航标题与路由页面，，，第二个参数为样式设置
 const AppTopNavigator = createMaterialTopTabNavigator({
@@ -126,6 +214,11 @@ const AppBottomNavigator = createMaterialBottomTabNavigator({
 *   所以需要默认情况下，顶部导航的左右两边都设置宽度，不管左右两边是否具有内容，Title都会居中显示了
 * */
 const TITLE_OFFSET = Platform.OS === 'ios' ? 70 : 56;
+
+/*
+*               这里是总路由
+*
+* */
 export const AppStackNavigator = createStackNavigator({
     // 对应页面的路由名
     HomePage: {
@@ -191,6 +284,12 @@ export const AppStackNavigator = createStackNavigator({
                 left: TITLE_OFFSET,
                 right: TITLE_OFFSET,
             }
+        }
+    },
+    DrawerNav:{
+        screen:DrawerNavigator,
+        navigationOptions:{
+            title:'抽屉式菜单'
         }
     }
 });
