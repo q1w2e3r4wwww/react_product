@@ -31,6 +31,12 @@ class HomePage extends Component {
                 <Button title={'go to DrawerNavigator'} onPress={ () => {
                     navigation.navigate('DrawerNav')
                 }} />
+                <Button
+                    title={'go to FlatList'}
+                    style={{marginTop:10}}
+                    onPress={ () => {
+                    navigation.navigate('FlatList')
+                }} />
             </View>
         );
     }
