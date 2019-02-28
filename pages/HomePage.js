@@ -26,7 +26,7 @@ class HomePage extends Component {
                     navigation.navigate('Top')
                 }} />
                 <Button title={'go to BottomNavigator'} onPress={ () => {
-                    navigation.navigate('Bottom')
+                    navigation.navigate('Bottom',{title:'deldl'})
                 }} />
                 <Button title={'go to DrawerNavigator'} onPress={ () => {
                     navigation.navigate('DrawerNav')
@@ -37,6 +37,12 @@ class HomePage extends Component {
                     onPress={ () => {
                     navigation.navigate('FlatList')
                 }} />
+                <Button
+                    title={'go to SectionList'}
+                    style={{marginTop:10}}
+                    onPress={ () => {
+                        navigation.navigate('SectionList')
+                    }} />
             </View>
         );
     }

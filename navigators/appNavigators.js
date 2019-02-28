@@ -22,6 +22,7 @@ import Page4 from '../pages/page4'
 import Page5 from '../pages/page5'
 import Login from '../pages/Login'
 import FlatList from '../pages/FlatList'
+import SectionList from '../pages/SectionList'
 
 /*
 *   进行下面的配置后，
@@ -144,9 +145,10 @@ const AppTopNavigator = createMaterialTopTabNavigator({
     }
 );
 
+// 底部tabbar导航
 const AppBottomNavigator = createMaterialBottomTabNavigator({
         Page1: { // 路由名称
-            screen: Page1, // 映射的路由页面
+            screen: AppTopNavigator, // 映射的路由页面
             navigationOptions: {
                 tabBarLabel: '最热', // 底部导航标题
                 tabBarIcon: ({tintColor, focused}) => ( // 底部导航图标，，通过focused来判断是否被选中
@@ -158,8 +160,8 @@ const AppBottomNavigator = createMaterialBottomTabNavigator({
                 )
             },
         },
-        Page2: { // 路由名称
-            screen: Page2, // 映射的路由页面
+        Screen3: { // 路由名称
+            screen: Page3, // 映射的路由页面
             navigationOptions: {
                 tabBarLabel: '趋势',
                 tabBarIcon: ({tintColor, focused}) => ( // 底部导航图标，，通过focused来判断是否被选中
@@ -171,8 +173,8 @@ const AppBottomNavigator = createMaterialBottomTabNavigator({
                 )
             },
         },
-        Page4: { // 路由名称
-            screen: Page4, // 映射的路由页面
+        Screen4: { // 路由名称
+            screen: Page5, // 映射的路由页面
             navigationOptions: {
                 tabBarLabel: '收藏',
                 tabBarIcon: ({tintColor, focused}) => ( // 底部导航图标，，通过focused来判断是否被选中
@@ -321,4 +323,19 @@ export const AppStackNavigator = createStackNavigator({
             }
         }
     },
+    SectionList: {
+        screen:SectionList,
+        navigationOptions:{
+            title:'SectionList列表',
+            headerTitleStyle:{
+                alignSelf:'center',
+                textAlign:'center',
+                flex:1
+            },
+            headerTitleContainerStyle:{
+                left:TITLE_OFFSET,
+                right:TITLE_OFFSET
+            }
+        }
+    }
 });

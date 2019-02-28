@@ -11,7 +11,7 @@ import { AppStackNavigator } from './navigators/appNavigators'
 import { createAppContainer } from 'react-navigation'
 import {name as appName} from './app.json';
 
-const AppStackNavigatorContainer = createAppContainer(AppStackNavigator);
+const AppStackNavigatorContainer = createAppContainer(AppStackNavigator); // 使用createAppContainer先包裹AppStackNavigator，在注册，是navigation 3.x的新语法
 //const AppStackNavigatorContainer = createAppContainer(AppNavigator);
 
 //AppRegistry.registerComponent(appName, () => App);
